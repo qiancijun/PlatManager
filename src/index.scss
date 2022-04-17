@@ -1,0 +1,11 @@
+.router-panel {
+    width: 95%;
+    margin: 10px auto;
+    margin-bottom: 0;
+    height: calc(100% - 50px - 54px);
+}
+.layout {
+    min-height:100%;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,29 @@
+.topbar-container {
+    width: 100%;
+    height: 44px;
+    background-color: $top-bar-background-color;
+    display: flex;
+    align-items: center;
+    .-app-name,
+    .-main-page {
+        margin-left: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        user-select: none;
+        background-image: -webkit-linear-gradient(bottom,#039BE5, #78909C,#80DEEA);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    .-about {
+        position: absolute;
+        right: 20px;
+        color: gray;
+        font-size: $font-size;
+        transition: 1s linear;
+        &:hover {
+            color: rgb(255, 255, 255);
+            transition: 0.25s linear;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+.three-canvas {
+    width: 100%;
+    height: 100%;
+}
+.data-board {
+    height: 100px;
+    width: 200px;
+    border: 1px solid white;
+    position: absolute;
+    right: 10px;
+    top: 54px;
+    span {
+        display: block;
+        color: white;
+        font-size: 20px;
+        margin-left: 10px;
+        line-height: 50px;
+    }
+}
+.info {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border: 2px solid lightblue;
+    background-color: rgba(255, 255, 255, 0.4);
+    p {
+        color: white;
+        font-size: 16px;
+        margin-left: 5px;
+        margin-top: 10px;
+    }
+}

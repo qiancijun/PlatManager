@@ -119,3 +119,21 @@ func WebSocket(c *gin.Context) {
 		time.Sleep(10 * time.Second)
 	}
 }
+
+func Modal1(c *gin.Context) {
+	conn, err := upgrade.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		c.Writer.WriteString(err.Error())
+		return
+	}
+	defer conn.Close()
+	for {
+		d := service.Modal1()
+		err = conn.WriteJSON(d)
+		if err != nil {
+			log.Println("write:", err)
+			break
+		}
+		time.Sleep(10 * time.Second)
+	}
+}

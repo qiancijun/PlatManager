@@ -6,16 +6,16 @@ type Event struct {
 }
 
 type inner struct {
-	Key    string  `json:"key"`
-	Value  float32 `json:"value"`
-	Events []Event `json:"events"`
+	Key    string      `json:"key"`
+	Value  interface{} `json:"value"`
+	Events []Event     `json:"events"`
 }
 
 type Data struct {
 	Temp     []inner `json:"temp"`
 	Humidity []inner `json:"humidity"`
 	TSP      []inner `json:"tsp"`
-	Other 	 []inner `json:"other"`
+	Other    []inner `json:"other"`
 }
 
 func NewData() *Data {

@@ -29,6 +29,7 @@ func WebServer() {
 			context.JSON(200, "hello")
 		})
 		data.GET("/ws", controller.WebSocket)
+		data.GET("/modal1", controller.Modal1)
 	}
 	router.StaticFS("/modals", http.Dir("./modals"))
 	router.Run(":8080")

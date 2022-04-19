@@ -57,7 +57,9 @@ export class TEngine {
             // }
 
             orbitControls.update();
-            this.renderer.render(this.scene, this.camera);
+            if (this.renderer != null) {
+                this.renderer.render(this.scene, this.camera);
+            }
             stats.update();
             requestAnimationFrame(renderFun);
         }

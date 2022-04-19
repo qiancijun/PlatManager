@@ -2,16 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom';
 import axios from "axios"
 import { TEngine } from "../../components/TEngine"
-import { lightsList } from "@/assets/js/TLights"
-import { helpList } from "@/assets/js/THelper"
-import { basicObjectList } from "@/assets/js/TObject"
+import { lightsList } from "../../assets/js/TLights"
+import { helpList } from "../../assets/js/THelper"
+import { basicObjectList } from "../../assets/js/TObject"
 import "./index.scss";
 // 模型加载
-import { LoadModal } from "@/assets/js/TModal"
+import { LoadModal } from "../../assets/js/TModal"
 import { Mesh, MeshStandardMaterial } from 'three'
 import { Button } from 'antd';
 // 图片
-import closeSVG from "@/assets/imgs/svgs/close.svg"
+import closeSVG from "../../assets/imgs/svgs/close.svg"
 
 let json = null;
 const data = new Map();
@@ -31,7 +31,10 @@ export default function ModalPage(props) {
         initTEngine();
         onConnect();
         return () => {
-
+            if (ws != null) {
+                ws.close();
+            }
+            clean();
         }
     }, []);
 
@@ -61,6 +64,13 @@ export default function ModalPage(props) {
             // const s = gltf.scene;
             TE.addObject(gltf);
         });
+    }
+
+    function clean() {
+        TE.renderer.dispose();
+        TE.renderer.forceContextLoss()
+        TE.renderer.domElement = null
+        TE.renderer = null
     }
 
     function renderDiv(pos, data) {
@@ -124,6 +134,9 @@ export default function ModalPage(props) {
     function onConnect() {
         // console.log(props)
         const { dataUrl } = props.history.location.query;
+        if (dataUrl == "" || dataUrl == null || dataUrl == undefined) {
+            return;
+        }
         if (ws == null) {
             ws = new WebSocket("ws://" + dataUrl);
             ws.onopen = () => {

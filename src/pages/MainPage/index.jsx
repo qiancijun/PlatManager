@@ -4,12 +4,12 @@ import MapComponent from '../../components/MapComponent';
 import { Input, message, Tooltip, Popover, Button, Upload } from 'antd';
 import { withRouter } from 'react-router-dom'
 // 图片引入
-import searchSVG from "@/assets/imgs/svgs/search.svg"
-import searchMoveSVG from "@/assets/imgs/svgs/search-move.svg"
+import searchSVG from "../../assets/imgs/svgs/search.svg"
+import searchMoveSVG from "../../assets/imgs/svgs/search-move.svg"
 // Redux
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { connect } from 'react-redux'
-import { initAmapAction } from '@/redux/actions/map'
+import { initAmapAction } from '../../redux/actions/map'
 // 接口
 import { platCount } from '../../interfaces/data';
 // 组件

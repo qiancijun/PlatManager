@@ -3,7 +3,7 @@
  */
 import React, { PureComponent } from 'react'
 import { Modal, Form, Input, Button, Checkbox } from 'antd';
-import { insertDataUrl } from "@/interfaces/data"
+import { insertDataUrl } from "../../interfaces/data"
 
 export default class InsertDataModal extends PureComponent {
     urlRef = React.createRef();

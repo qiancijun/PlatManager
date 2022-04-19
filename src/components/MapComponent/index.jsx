@@ -18,14 +18,14 @@ import { Button, message, Tooltip } from 'antd';
 import CreatePlatModal from '../Modals/CreatePlatModal';
 // redux 相关
 import { connect } from 'react-redux'
-import { createMapAction, addMarkerAction, deleteMarkerAction, initAmapAction } from '@/redux/actions/map'
+import { createMapAction, addMarkerAction, deleteMarkerAction, initAmapAction } from '../../redux/actions/map'
 // 图标
-import me from "@/assets/imgs/svgs/me.svg"
-import point from "@/assets/imgs/svgs/point.svg"
-import platIcon from "@/assets/imgs/svgs/plat.svg"
-import locate from "@/assets/imgs/svgs/locate.svg"
+import me from "../../assets/imgs/svgs/me.svg"
+import point from "../../assets/imgs/svgs/point.svg"
+import platIcon from "../../assets/imgs/svgs/plat.svg"
+import locate from "../../assets/imgs/svgs/locate.svg"
 // 接口
-import { checkLabel, insertPlat, insertPath, listPlats, deletePlat, deletePath } from '@/interfaces/plat'
+import { checkLabel, insertPlat, insertPath, listPlats, deletePlat, deletePath } from '../../interfaces/plat'
 
 class MapComponent extends Component {
     constructor() {

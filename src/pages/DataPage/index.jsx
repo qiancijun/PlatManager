@@ -16,6 +16,8 @@ export default function DataPage(props) {
     const tempRef = React.useRef();
     const humidityRef = React.useRef();
     const platRef = React.useRef();
+    const memoryRef = React.useRef();
+    const cpuRef = React.useRef();
     const forceUpdate = useForceUpdate();
     // 数据
     let platHumidityData = [
@@ -25,6 +27,7 @@ export default function DataPage(props) {
         },
     ];
     let interval = null;
+    let firstLoad = false;
 
     React.useEffect(() => {
         onConnect();
@@ -37,7 +40,7 @@ export default function DataPage(props) {
             // console.log(otherData);
         }, 2000);
         return () => {
-            
+            ws.close();
         }
     }, [clearInterval(interval)]);
 
@@ -177,7 +180,7 @@ export default function DataPage(props) {
     const cpuConfig = {
         padding: 'auto',
         autoFit: false,
-        percent: 0.7,
+        percent: 0,
         color: ['#5B8FF9', '#E8EDF3'],
         statistic: {
             title: {
@@ -197,7 +200,7 @@ export default function DataPage(props) {
     const memoryConfig = {
         padding: 'auto',
         autoFit: false,
-        percent: 0.9,
+        percent: 0,
         color: ['#F4664A', '#E8EDF3'],
         // color: (d) => {
         //     console.log(d);
@@ -222,6 +225,7 @@ export default function DataPage(props) {
         let tempData = [];
         let humidityData = [];
         const data = JSON.parse(e.data);
+        // console.log(data)
         data.temp.forEach(
             d => {
                 tempData.push({
@@ -298,6 +302,19 @@ export default function DataPage(props) {
                 forceUpdate();
             }   
         }
+
+        const { sysStat } = data;
+        if (!firstLoad) {
+            firstLoad = true;
+            memoryRef.current.getChart().update({
+                ...memoryConfig,
+                percent: parseFloat(sysStat.UsedPercent / 100),
+            });
+            cpuRef.current.getChart().update({
+                ...cpuConfig,
+                percent: sysStat.Load15,
+            });
+        }
         
     }
 
@@ -344,10 +361,10 @@ export default function DataPage(props) {
             <div className="-right-container">
                 <div className="-pc-container">
                     <div className="-cpu-container">
-                        <RingProgress {...cpuConfig} />
+                        <RingProgress {...cpuConfig} ref={ cpuRef }/>
                     </div>
                     <div className="-memory-container">
-                        <RingProgress {...memoryConfig} />
+                        <RingProgress {...memoryConfig} ref={ memoryRef }/>
                     </div>
                 </div>
                 <div className="-other-data-container">

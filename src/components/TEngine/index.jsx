@@ -19,7 +19,7 @@ export class TEngine {
         this.raycaster = new Raycaster();
 
         // 设置相机视角
-        this.camera.position.set(20, 20, 20);
+        this.camera.position.set(20, 20, 10);
         this.camera.lookAt(new Vector3(0, 0, 0));
         this.camera.up = new Vector3(0, 1, 0);
 
@@ -67,8 +67,18 @@ export class TEngine {
         window.addEventListener('click', this.onMouseClick, false);
     }
 
-    onMouseClick = (event) => {
-        
+    clean = () => {
+        console.log("clean")
+        this.scene.traverse(
+            child => {
+                console.log(child);
+            }
+        );
+        this.render.dispose();
+        this.scene.clear();
+    }
+
+    onMouseClick = (e) => {
         const objs = new Set();
         // 通过鼠标点的位置和当前相机的矩阵计算出raycaster
         this.raycaster.setFromCamera(this.mouse, this.camera);
@@ -81,8 +91,14 @@ export class TEngine {
         objs.forEach(obj => {
             // console.log(obj);
             const data = this.handler(obj);
+            // console.log(data)
             if (data != null) {
-                this.renderDiv(obj.position.clone().project(this.camera), data);
+                const pos = {
+                    x: e.clientX,
+                    y: e.clientY,
+                }
+                // this.renderDiv(obj.position.clone().project(this.camera), data);
+                this.renderDiv(pos, data);
             }
             // console.log(obj.position.clone().project(this.camera));
         });

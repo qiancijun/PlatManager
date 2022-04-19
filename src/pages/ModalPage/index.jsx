@@ -18,6 +18,7 @@ const data = new Map();
 export default function ModalPage(props) {
 
     let ws = null;
+    let TE = null;
     // Refs
     const canvasRef = React.useRef();
     const infoRef = React.useRef();
@@ -40,6 +41,7 @@ export default function ModalPage(props) {
             if (json == null || !obj.visible) return null;
 
             const name = obj.name;
+            // console.log(name);
             if (data.get(name) == null) return null;
             return data.get(name);
             // if (obj.name != name) {
@@ -52,19 +54,18 @@ export default function ModalPage(props) {
             // }
 
         }
-        const TE = new TEngine(canvasRef.current, handler, renderDiv);
+        TE = new TEngine(canvasRef.current, handler, renderDiv);
         TE.addObject(...lightsList);
         // TE.addObject(...helpList);
         LoadModal(`http://localhost:8080${modalUrl}`, gltf => {
-            const s = gltf.scene;
-            TE.addObject(s);
+            // const s = gltf.scene;
+            TE.addObject(gltf);
         });
     }
 
     function renderDiv(pos, data) {
         const halfWidth = window.innerWidth / 2;
         const halfHeight = window.innerHeight / 2;
-
         // 解析 data 中的 event
         const { events, key, value } = data;
         const eventsDom = [];
@@ -91,8 +92,10 @@ export default function ModalPage(props) {
 
         const dom = (
             <div className="info" style={{
-                left: pos.x * halfWidth + halfWidth,
-                top: -pos.y * halfHeight + halfHeight,
+                // left: pos.x * halfWidth + halfWidth,
+                // top: -pos.y * halfHeight + halfHeight,
+                left: pos.x,
+                top: pos.y,
             }}>
                 <div>
 
@@ -101,7 +104,8 @@ export default function ModalPage(props) {
                         marginRight: "5px",
                         marginTop: "5px",
                         overflow: "hidden",
-                    }} size="small" type="primary" shape="circle" onClick={() => {
+                    }} size="small" type="primary" shape="circle" onClick={(e) => {
+                        e.stopPropagation();
                         setHide(true);
                     }} >
                         <img src={closeSVG} alt="" />
@@ -118,8 +122,10 @@ export default function ModalPage(props) {
     }
 
     function onConnect() {
+        // console.log(props)
+        const { dataUrl } = props.history.location.query;
         if (ws == null) {
-            ws = new WebSocket("ws://localhost:8080/data/ws");
+            ws = new WebSocket("ws://" + dataUrl);
             ws.onopen = () => {
                 // ws.send("hello");
                 console.log("连接成功");

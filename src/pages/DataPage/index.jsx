@@ -37,7 +37,7 @@ export default function DataPage(props) {
             // console.log(otherData);
         }, 2000);
         return () => {
-
+            
         }
     }, [clearInterval(interval)]);
 
@@ -278,23 +278,25 @@ export default function DataPage(props) {
 
         // 其他数据
         if (otherData.length == 0) {
-            data.other.forEach(
-                d => {
-                    const key = d.key;
-                    const value = d.value;
-                    // otherData.push({
-                    //     key: key,
-                    //     value: value,
-                    // })
-                    otherData.push((
-                        <div className='-other-data'>
-                            <div className='-other-data-key'>{key}</div>
-                            <div className='-other-data-value'>{value}</div>
-                        </div>
-                    ));
-                }
-            );
-            forceUpdate();
+            if (data.other != null) {
+                data.other.forEach(
+                    d => {
+                        const key = d.key;
+                        const value = d.value;
+                        // otherData.push({
+                        //     key: key,
+                        //     value: value,
+                        // })
+                        otherData.push((
+                            <div className='-other-data'>
+                                <div className='-other-data-key'>{key}</div>
+                                <div className='-other-data-value'>{value}</div>
+                            </div>
+                        ));
+                    }
+                );
+                forceUpdate();
+            }   
         }
         
     }
@@ -304,7 +306,6 @@ export default function DataPage(props) {
     // }
 
     function onConnect() {
-        console.log(props.location)
         const { dataUrl } = props.location.query;
         if (ws == null) {
             // ws = new WebSocket("ws://localhost:8080/data/ws");

@@ -137,3 +137,12 @@ func Modal1(c *gin.Context) {
 		time.Sleep(10 * time.Second)
 	}
 }
+
+func SysStat(c *gin.Context) {
+	sys := entity.GetSysStat()
+	if sys == nil {
+		c.JSON(200, entity.Ok())
+	} else {
+		c.JSON(200, entity.Ok().Put("data", sys))
+	}
+}

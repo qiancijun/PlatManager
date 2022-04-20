@@ -1,0 +1,8 @@
+database:
+  host: "139.198.178.2"
+  port: 5432
+  user: "postgres"
+  passwd: "20010206qianci"
+  dname: "postgres"
+server:
+  port: 8080

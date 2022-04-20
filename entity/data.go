@@ -12,16 +12,18 @@ type inner struct {
 }
 
 type Data struct {
-	Temp     []inner `json:"temp"`
-	Humidity []inner `json:"humidity"`
-	TSP      []inner `json:"tsp"`
-	Other    []inner `json:"other"`
+	Temp     []inner  `json:"temp"`
+	Humidity []inner  `json:"humidity"`
+	TSP      []inner  `json:"tsp"`
+	Other    []inner  `json:"other"`
+	SysStat  *SysStat `json:"sysStat"`
 }
 
 func NewData() *Data {
 	data := &Data{
 		Temp:     make([]inner, 0),
 		Humidity: make([]inner, 0),
+		SysStat:  GetSysStat(),
 	}
 	return data
 }

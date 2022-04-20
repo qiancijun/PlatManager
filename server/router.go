@@ -3,11 +3,17 @@ package server
 import (
 	"PlatformManager/controller"
 	"PlatformManager/middlewares"
-	"github.com/gin-gonic/gin"
+	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
+var port int
+
 func WebServer() {
+	port = viper.GetInt("server.port")
 	router := gin.Default()
 	router.Use(middlewares.Cors())
 	router.Use(gin.Recovery())
@@ -30,7 +36,8 @@ func WebServer() {
 		})
 		data.GET("/ws", controller.WebSocket)
 		data.GET("/modal1", controller.Modal1)
+		data.GET("/sysStat", controller.SysStat)
 	}
 	router.StaticFS("/modals", http.Dir("./modals"))
-	router.Run(":8080")
+	router.Run(fmt.Sprintf(":%d", port))
 }
